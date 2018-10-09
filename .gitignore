@@ -1,0 +1,19 @@
+# Compiled files
+*.tfstate
+*.tfstate.backup
+
+# Module directory
+.terraform/
+
+# Terraform Variables
+*.tfvars
+
+#Terraform Plan
+*.tfplan
+*.tfpl
+
+# SSH Keys
+*.pem
+
+.DS_store
+.DS_Store
