@@ -6,7 +6,6 @@ provider "azurerm" {}
 # Set through CLI or env variables - 
 # How To: https://www.terraform.io/docs/providers/azurerm/authenticating_via_service_principal.html
 
-
 # Create a resource group
 resource "azurerm_resource_group" "network" {
   name     = "devtest"
@@ -30,8 +29,8 @@ module "network" {
 
 # Deploy the Fleet
 module "webserver_cluster" {
-    source = "github.com/gmaentz/terraform_azure/modules/vmss"
-    # source = "../../modules/services/vmss"
+    # source = "github.com/gmaentz/terraform_azure/modules/vmss"
+    source = "./modules/vmss"
     location =  "${azurerm_resource_group.network.location}"
     resource_group_name = "${azurerm_resource_group.network.name}"
     virtual_network_name = "${module.network.vnet_name}"
@@ -41,16 +40,10 @@ module "webserver_cluster" {
     admin_password = "AzureAdminP@ssword1"
     cluster_name = "webserver-dev"
     cluster_size = "2"
-    #image = ""
-    #key_name = "MyOregonSSH"
     instance_type = "Standard_D1_v2"
+    cloud_config_file = "web.conf"
     tags                = {
                             owner = "user"
                             environment = "dev-environment"
                           }
  }
-
-# module "cloud_watch" {
-#   source = "github.com/gmaentz/terraform/modules/services/cloud-watch"
-#   sms_number = "${var.sms_number}"
-#   autoscaling_group = "${module.webserver_cluster.asg_name}"

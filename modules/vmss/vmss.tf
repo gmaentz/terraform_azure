@@ -54,19 +54,6 @@ resource "azurerm_lb_rule" "lbnatrule" {
    probe_id                       = "${azurerm_lb_probe.vmss.id}"
 }
 
-# ---------------------------------------------------------------------------------------------------------------------
-# THE CUSTOM DATA SCRIPT THAT WILL RUN ON EACH SERVER NODE WHEN IT'S BOOTING
-# This script will configure and start our webserver
-# ---------------------------------------------------------------------------------------------------------------------
-
-# data "template_file" "custom_data_server" {
-#   template = "${file("${path.module}/webclient.sh")}"
-
-#   vars {
-#     cluster_name   = "${var.cluster_name}"
-#   }
-# }
-
 resource "azurerm_virtual_machine_scale_set" "vmss" {
  name                = "${var.cluster_name}"
  location            = "${var.location}"
@@ -86,13 +73,6 @@ resource "azurerm_virtual_machine_scale_set" "vmss" {
    version   = "latest"
  }
 
-#  storage_profile_image_reference {
-#    publisher = "OpenLogic"
-#    offer     = "CentOS"
-#    sku       = "7-CI"
-#    version   = "latest"
-#  }
-
  storage_profile_os_disk {
    caching           = "ReadWrite"
    create_option     = "FromImage"
@@ -111,7 +91,6 @@ resource "azurerm_virtual_machine_scale_set" "vmss" {
    admin_username       = "${var.admin_user}"
    admin_password       = "${var.admin_password}"
    custom_data          = "${file("web.conf")}"
-   # custom_data          = "${data.template_file.custom_data_server.rendered}"
  }
 
  os_profile_linux_config {

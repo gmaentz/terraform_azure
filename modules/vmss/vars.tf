@@ -41,3 +41,6 @@ variable "tags" {
  description = "A map of the tags to use for the resources that are deployed"
  type        = "map"
 }
+variable "cloud_config_file" {
+ description = "Path to the file to apply bootstrap custom data/cloud config"
+}
