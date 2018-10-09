@@ -30,7 +30,8 @@ module "network" {
 
 # Deploy the Fleet
 module "webserver_cluster" {
-    source = "../../modules/services/vmss"
+    source = "github.com/gmaentz/terraform_azure/modules/vmss"
+    # source = "../../modules/services/vmss"
     location =  "${azurerm_resource_group.network.location}"
     resource_group_name = "${azurerm_resource_group.network.name}"
     virtual_network_name = "${module.network.vnet_name}"
