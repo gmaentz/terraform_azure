@@ -1,10 +1,10 @@
-#Connect to Azure
-# Configure the Azure Provider
-provider "azurerm" {}
-
+# Connect to Azure
 # Authenticate with Azure and Create a Resource Group
 # Set through CLI or env variables - 
 # How To: https://www.terraform.io/docs/providers/azurerm/authenticating_via_service_principal.html
+
+# Configure the Azure Provider
+provider "azurerm" {}
 
 # Create a resource group
 resource "azurerm_resource_group" "network" {
@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "network" {
   location = "eastus2"
 }
 
-#Build out my Network
+# Build Virtual Network
 module "network" {
     source              = "Azure/network/azurerm"
     resource_group_name = "${azurerm_resource_group.network.name}"
